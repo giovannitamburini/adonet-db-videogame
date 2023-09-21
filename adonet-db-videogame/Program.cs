@@ -83,6 +83,13 @@ while (repeatMenu)
 
             Console.WriteLine("Hai selezionato l'opzione 2: ricercare un videogioco per id");
 
+            Console.Write("Inserisci l'id del videogame che vuoi cercare: ");
+            long idVideogame = long.Parse(Console.ReadLine());
+
+            Videogame videogameFoundedById = ManagerDBVideogame.GetVideogamesById(idVideogame);
+
+            Console.WriteLine(videogameFoundedById);
+
             break;
         case 3:
 

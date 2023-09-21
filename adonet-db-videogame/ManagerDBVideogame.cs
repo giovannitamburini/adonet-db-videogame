@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Data.SqlClient;
-
+using System.Data;
 
 namespace adonet_db_videogame
 {
@@ -15,7 +15,7 @@ namespace adonet_db_videogame
 
         public static bool AddVideogame(Videogame videogameToAdd)
         {
-            
+
             // dichiaro un nuovo oggetto di tipo SqlConnection in un blocco using in modo da non dover chiudere la connesione al DB perchè lo fa in automatico il blocco
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
@@ -35,7 +35,7 @@ namespace adonet_db_videogame
 
                     int affectedRows = cmd.ExecuteNonQuery();
 
-                    if(affectedRows > 0)
+                    if (affectedRows > 0)
                     {
                         return true;
                     }
@@ -48,6 +48,39 @@ namespace adonet_db_videogame
 
                 return false;
             }
+        }
+
+        public static Videogame GetVideogamesById(long idByUser)
+        {
+            using SqlConnection connection = new SqlConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+
+                string query = "SELECT id, name, overview, release_date, software_house_id FROM videogames WHERE id = @id;";
+
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.Add(new SqlParameter("@id", idByUser));
+
+                    using (SqlDataReader data = cmd.ExecuteReader())
+                    {
+                        if (data.Read())
+                        {
+                            return new Videogame(data.GetInt64(0), data.GetString(1), data.GetString(2), data.GetDateTime(3), data.GetInt64(4));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            Console.WriteLine("Mi dispiace ma non ho trovato nulla");
+            return null;
+
         }
     }
 }
