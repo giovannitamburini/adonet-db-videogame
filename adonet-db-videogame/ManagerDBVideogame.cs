@@ -40,7 +40,6 @@ namespace adonet_db_videogame
                         return true;
                     }
 
-
                 }
                 catch (Exception ex)
                 {

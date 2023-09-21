@@ -19,6 +19,7 @@ Creare una classe VideogameManager che esponga tutti i metodi necessari al progr
 Creare una classe Videogame da passare come parametro al metodo di inserimento nuovo videogioco e che venga restituita dai metodi di ricerca.
 */
 
+using adonet_db_videogame;
 using System.Data.SqlClient;
 
 Console.Write("Prima di effettuare l'accesso inserisci il tuo nome utente: ");
@@ -26,7 +27,9 @@ string userName = Console.ReadLine();
 
 Console.WriteLine($"Benvenuto {userName} nel sistema di gestione dei videogames che vengono utilizzati nei tornei");
 
-while (true)
+bool repeatMenu = true;
+
+while (repeatMenu)
 {
 
 
@@ -48,7 +51,34 @@ while (true)
 
             Console.WriteLine("Hai selezionato l'opzione 1: inserire un nuovo videogioco");
 
+            Console.WriteLine("Inserisci i dati del videogame");
+
+            Console.Write("Inserisci il nome del videogame: ");
+            string name = Console.ReadLine();
+
+            Console.Write("Inserisci il riepilogo del videogame: ");
+            string overview = Console.ReadLine();
+
+            Console.Write("Inserisci la data di realizzazione del videogame (dd/MM/yyyy): ");
+            DateTime releaseDate = DateTime.Parse(Console.ReadLine());
+
+            Console.Write("Inserisci l'id della casa di produzione del videogame: ");
+            long software_house_id = long.Parse(Console.ReadLine());
+
+            Videogame newVideogame = new Videogame(0, name, overview, releaseDate, software_house_id);
+
+            bool inserted = ManagerDBVideogame.AddVideogame(newVideogame);
+
+            if (inserted)
+            {
+                Console.WriteLine("Videogame inserito con successo");
+            } else
+            {
+                Console.WriteLine("Videogame non inserito");
+            }
+
             break;
+
         case 2:
 
             Console.WriteLine("Hai selezionato l'opzione 2: ricercare un videogioco per id");
@@ -67,6 +97,8 @@ while (true)
         case 5:
 
             Console.WriteLine("Hai selezionato l'opzione 5: chiudere il programma");
+
+            repeatMenu = false;
 
             break;
 
