@@ -72,7 +72,8 @@ while (repeatMenu)
             if (inserted)
             {
                 Console.WriteLine("Videogame inserito con successo");
-            } else
+            }
+            else
             {
                 Console.WriteLine("Videogame non inserito");
             }
@@ -94,6 +95,16 @@ while (repeatMenu)
         case 3:
 
             Console.WriteLine("Hai selezionato l'opzione 3: ricercare tutti i videogiochi aventi il nome contenente una determinata stringa inserita in input");
+
+            Console.Write("Inserisci una stringa per ricercare uno o più videogames che contengono nel nome la stringa da te inserita: ");
+            string stringtoSearch = Console.ReadLine();
+
+            List<Videogame> videogameFoundedByName = ManagerDBVideogame.GetVideogameFromStringContainedInTheName(stringtoSearch);
+
+            foreach (Videogame vg in videogameFoundedByName)
+            {
+                Console.WriteLine(vg);
+            }
 
             break;
         case 4:
