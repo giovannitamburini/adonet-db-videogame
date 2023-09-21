@@ -92,6 +92,7 @@ while (repeatMenu)
             Console.WriteLine(videogameFoundedById);
 
             break;
+
         case 3:
 
             Console.WriteLine("Hai selezionato l'opzione 3: ricercare tutti i videogiochi aventi il nome contenente una determinata stringa inserita in input");
@@ -107,11 +108,27 @@ while (repeatMenu)
             }
 
             break;
+
         case 4:
 
             Console.WriteLine("Hai selezionato l'opzione 4: cancellare un videogioco");
 
+            Console.Write("Inserisci l'id del videogame che vuoi eliminare: ");
+            long idVideogameToBeDeleted = long.Parse(Console.ReadLine());
+
+            bool deleted = ManagerDBVideogame.DeleteVideogame(idVideogameToBeDeleted);
+
+            if (deleted)
+            {
+                Console.WriteLine($"Il videogame con id '{idVideogameToBeDeleted}' è stato eliminato");
+            }
+            else
+            {
+                Console.WriteLine("Il videogame non è stato eliminato");
+            }
+
             break;
+
         case 5:
 
             Console.WriteLine("Hai selezionato l'opzione 5: chiudere il programma");
@@ -121,7 +138,9 @@ while (repeatMenu)
             break;
 
         default:
+
             Console.WriteLine("Non hai selezionato un opzione valida");
+
             break;
     }
 }
